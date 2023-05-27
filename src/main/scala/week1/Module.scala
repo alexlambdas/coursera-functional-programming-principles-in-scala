@@ -35,7 +35,7 @@ object Module {
     * @return
     */
   def isGoodEnough(guess: Double, x: Double): Boolean = 
-    abs(guess * guess - x) < 0.001
+    abs(guess * guess - x) < 0.00001
 
     /**
       * 

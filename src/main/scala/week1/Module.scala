@@ -8,6 +8,14 @@ object Module {
     * @param x
     * @return
     */
+  def abs(x: Double): Double = if(x < 0) then -x else x
+
+  /**
+    * 
+    *
+    * @param x
+    * @return
+    */
   def square(x: Double): Double = x * x
 
   /**
@@ -25,17 +33,7 @@ object Module {
     * @param x
     * @return
     */
-  def abs(x: Double): Double = if(x < 0) then -x else x
-
-  /**
-    * 
-    *
-    * @param guess
-    * @param x
-    * @return
-    */
-  def isGoodEnough(guess: Double, x: Double): Boolean = 
-    abs(guess * guess - x) < 0.00001
+  def sqrt(x: Double): Double =
 
     /**
       * 
@@ -44,25 +42,29 @@ object Module {
       * @param x
       * @return
       */
-  def improve(guess: Double, x: Double): Double = (guess + x / guess) / 2
+    def sqrIter(guess: Double): Double =
+      if (isGoodEnough(guess)) then guess
+      else sqrIter(improve(guess))
 
-  /**
-    * 
-    *
-    * @param guess
-    * @param x
-    * @return
-    */
-  def sqrIter(guess: Double, x: Double): Double =
-    if (isGoodEnough(guess, x)) then guess
-    else sqrIter(improve(guess, x), x)
+    /**
+      * 
+      *
+      * @param guess
+      * @param x
+      * @return
+      */
+    def isGoodEnough(guess: Double): Boolean = 
+      abs(guess * guess - x) < 0.00001
 
-  /**
-    * 
-    *
-    * @param x
-    * @return
-    */
-  def sqrt(x: Double): Double = sqrIter(1.0, x)
+    /**
+      * 
+      *
+      * @param guess
+      * @param x
+      * @return
+      */
+    def improve(guess: Double): Double = (guess + x / guess) / 2
+
+    sqrIter(1.0)
 
 }

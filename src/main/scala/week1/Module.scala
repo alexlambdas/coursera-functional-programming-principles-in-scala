@@ -114,21 +114,19 @@ object Module {
     */
   def pascalTailRec(c: Int, r: Int): Int =
 
+    @tailrec
+    def loop(column: Int, row: Int, acct: List[Int]): List[Int] =
+      if(column == c && row == r) then 
+        if(column == row) then acct.::(1)
+        else if(column == 0) then acct.::(1)
+        else acct.::(pascalSum(row, acct))
+      else
+        if(column == row) then loop(0, row+1, acct.::(1))
+        else if(column == 0) then loop(column+1, row, acct.::(1))
+        else loop(column+1, row, acct.::(pascalSum(row, acct)))
+
+    def pascalSum(row: Int, pascal: List[Int]) = pascal.apply(row-1) + pascal.apply(row)
+
     if (c > r) then -1
-    else
-
-      @tailrec
-      def loop(column: Int, row: Int, acct: List[Int]): List[Int] =
-        if(column == c && row == r) then 
-          if(column == row) then acct.::(1)
-          else if(column == 0) then acct.::(1)
-          else acct.::(pascalSum(row, acct))
-        else
-          if(column == row) then loop(0, row+1, acct.::(1))
-          else if(column == 0) then loop(column+1, row, acct.::(1))
-          else loop(column+1, row, acct.::(pascalSum(row, acct)))
-
-      def pascalSum(row: Int, pascal: List[Int]) = pascal.apply(row-1) + pascal.apply(row)
-
-      loop(0,0,List()).head
+    else loop(0,0,List()).head
 }

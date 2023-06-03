@@ -129,4 +129,38 @@ object Module {
 
     if (c > r) then -1
     else loop(0,0,List()).head
+
+  /**
+    * 
+    *
+    * @param chars
+    * @return
+    */
+  def balanceTailRec(chars: List[Char]): Boolean =
+
+    def checkParentheses(test: Char) =
+      if(test == '(' || test == ')') then true
+      else false
+
+    def cancelParetheses(head: Char, current: Char) =
+      if(head == '(' && current == ')') then true
+      else false
+
+    @tailrec
+    def loop(chars: List[Char], acct: List[Char]): List[Char] =
+      if(chars.isEmpty) then acct
+      else
+        if(acct.isEmpty) then 
+          if(checkParentheses(chars.head)) then loop(chars.tail, acct.::(chars.head))
+          else loop(chars.tail, acct)
+        else
+          if(checkParentheses(chars.head)) then
+            if(cancelParetheses(acct.head, chars.head)) then loop(chars.tail, acct.tail)
+            else loop(chars.tail, acct.::(chars.head))
+          else 
+            loop(chars.tail, acct)
+
+    if(loop(chars, List()).isEmpty) then true
+    else false
+
 }
